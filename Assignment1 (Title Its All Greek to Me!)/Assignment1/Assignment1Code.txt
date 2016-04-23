@@ -1,0 +1,87 @@
+.
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Assignment1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //Change font colour
+            Console.ForegroundColor = ConsoleColor.Magenta;
+
+            //Welcome message and explanation of the appliaction to the user
+            string textToEnter = "Welcome User! \r\n";
+            Console.SetCursorPosition((Console.WindowWidth - textToEnter.Length) / 2, Console.CursorTop);
+            Console.WriteLine(textToEnter);
+            Console.WriteLine("This application will calculate the Distance and Angle between two points. \r\n");
+            Console.WriteLine();
+
+            //Reset font colour
+            Console.ResetColor();
+
+            //Change font colour
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            //Text Graphics
+            string SymbolLine = "+==+==+==+==+==+==+==+==+==+==+==+==+==+ \r\n \r\n";
+            Console.SetCursorPosition((Console.WindowWidth - SymbolLine.Length) / 2, Console.CursorTop);
+            Console.WriteLine(SymbolLine);
+
+            String SpaceShip = "Enter values for point1X, point1Y, point2X, point2Y. \r\n ";
+            Console.SetCursorPosition((Console.WindowWidth - SpaceShip.Length) / 2, Console.CursorTop);
+            Console.WriteLine(SpaceShip);
+            Console.WriteLine();
+
+            string SymbolLine2 = "+==+==+==+==+==+==+==+==+==+==+==+==+==+  \r\n\r\n  ";
+            Console.SetCursorPosition((Console.WindowWidth - SymbolLine2.Length) / 2, Console.CursorTop);
+            Console.WriteLine(SymbolLine2);
+
+            //Reset font colour
+            Console.ResetColor();
+
+            //Change font colour
+            Console.ForegroundColor = ConsoleColor.White;
+
+            //prompt for and get the x value
+            Console.Write("Enter the point1X Value ");
+            float point1X = float.Parse(Console.ReadLine());
+            Console.Write("Enter the point1Y Value ");
+            float point1Y = float.Parse(Console.ReadLine());
+            Console.WriteLine();
+
+            //prompt for and get the y value
+            Console.Write("Enter the point2X Value ");
+            float point2X = float.Parse(Console.ReadLine());
+            Console.Write("Enter the pointY2 Value ");
+            float point2Y = float.Parse(Console.ReadLine());
+            Console.WriteLine();
+
+            //calculate the delta x and delta y between the two points
+            float deltaX = (float)Math.Pow((point2X - point1X), 2);
+            float deltaY = (float)Math.Pow((point2Y - point1Y), 2);
+
+            //Pythagoras theorem for distance
+            float distance = (float)Math.Sqrt(deltaY + deltaX);
+
+            //atan2 for angle
+            float radians = (float)Math.Atan2((point2Y - point1Y), (point2X - point1X));
+
+            //radians into degrees
+            float angle = radians * (180 / (float)Math.PI);
+
+            //output distance between points
+            Console.WriteLine("Distance between points {0} ", Math.Round(distance, 3));
+            //output angle between points
+            Console.WriteLine("Angle between points {0:N3} ", Math.Round(angle, 3));
+            Console.WriteLine();
+
+        }
+    }
+}
+       
