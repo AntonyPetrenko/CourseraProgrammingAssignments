@@ -1,0 +1,6 @@
+c:\users\user\documents\visual studio 2015\Projects\FahrentheitTest\FahrentheitTest\bin\Debug\FahrentheitTest.exe.config
+c:\users\user\documents\visual studio 2015\Projects\FahrentheitTest\FahrentheitTest\obj\Debug\FahrentheitTest.csprojResolveAssemblyReference.cache
+c:\users\user\documents\visual studio 2015\Projects\FahrentheitTest\FahrentheitTest\bin\Debug\FahrentheitTest.exe
+c:\users\user\documents\visual studio 2015\Projects\FahrentheitTest\FahrentheitTest\bin\Debug\FahrentheitTest.pdb
+c:\users\user\documents\visual studio 2015\Projects\FahrentheitTest\FahrentheitTest\obj\Debug\FahrentheitTest.exe
+c:\users\user\documents\visual studio 2015\Projects\FahrentheitTest\FahrentheitTest\obj\Debug\FahrentheitTest.pdb
