@@ -95,7 +95,11 @@ namespace ProgrammingAssignment4
 
             // STUDENTS: get current mouse state and update teddy
             MouseState mouse = Mouse.GetState();
-            teddy.Update(gameTime, mouse);
+            if (pickups.Count > 0)
+            {
+
+                teddy.Update(gameTime, mouse);
+            }
 
             // check for right click started
             if (mouse.RightButton == ButtonState.Pressed &&
@@ -137,10 +141,21 @@ namespace ProgrammingAssignment4
 
                 // STUDENTS: if there's another pickup to collect, set teddy target
                 // If not, clear teddy target and stop the teddy from collecting
-                if (pickups.Count > 1)
+                if (pickups.Count > 0)
                 {
+                    
+
+                    teddy.SetTarget(new Vector2(pickups[0].CollisionRectangle.Center.X, pickups[0].CollisionRectangle.Center.Y));
+                } else {
+
+                    //clear teddy target
+                    teddy.ClearTarget();
+
+                    teddy.Collecting = false;
+
                     base.Update(gameTime);
                 }
+
             }
         }
 
@@ -166,44 +181,90 @@ namespace ProgrammingAssignment4
     }
 }
 
+        /// <summary>
+        /// Updates the teddy
+        /// </summary>
+        /// <param name="gameTime">game time</param>
+        /// <param name="mouse">current mouse state</param>
+        public void Update(GameTime gameTime, MouseState mouse)
+        {
+            // STUDENTS: update location based on velocity if teddy is collecting
+            // Be sure to update the location field first, then center the
+            // draw rectangle on the location
+            location.X = location.X + velocity.X * gameTime.ElapsedGameTime.Milliseconds;
+            location.Y = location.Y + velocity.Y * gameTime.ElapsedGameTime.Milliseconds;
+        
+            drawRectangle.X = (int)(location.X - halfDrawRectangleWidth);
+            drawRectangle.Y = (int)(location.Y - halfDrawRectangleHeight);
 
+            // check for mouse over teddy
+            if (drawRectangle.Contains(mouse.X, mouse.Y))
+            {
+                // check for left click started on teddy
+                if (mouse.LeftButton == ButtonState.Pressed &&
+                    leftButtonReleased)
+                {
+                    leftClickStarted = true;
+                    leftButtonReleased = false;
+                }
+                else if (mouse.LeftButton == ButtonState.Released)
+                {
+                    leftButtonReleased = true;
 
+                    // if click finished on teddy, start collecting if target set
+                    if (leftClickStarted)
+                    {
+                        if (targetSet)
+                        {
+                            collecting = true;
+                        }
+                        leftClickStarted = false;
+                    }
+                }
+            }
+            else
+            {
+                // no clicking on teddy
+                leftClickStarted = false;
+                leftButtonReleased = false;
+            }
+        }
 
+        /// <summary>
+        /// Draws the teddy
+        /// </summary>
+        /// <param name="spriteBatch">sprite batch</param>
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            // STUDENTS: use the sprite batch to draw the teddy
+            spriteBatch.Draw(this.sprite, drawRectangle, Color.White);
+        }
 
+        /// <summary>
+        /// Sets a target for the teddy to move toward
+        /// </summary>
+        /// <param name="target">target</param>
+        public void SetTarget(Vector2 target)
+        {
+			targetSet = true;
 
+            // STUDENTS: set teddy velocity based on teddy center location and target
+            Vector2 distance = new Vector2();
+            distance.X = target.X - drawRectangle.Center.X;
+            distance.Y = target.Y - drawRectangle.Center.Y;
+            distance.Normalize();
+            this.velocity.X = distance.X * BaseSpeed;
+            this.velocity.Y = distance.Y * BaseSpeed;
+        }
 
+        /// <summary>
+        /// Clears the target for the teddy (it no longer has a target)
+        /// </summary>
+        public void ClearTarget()
+        {
+            targetSet = false;
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        #endregion
+    }
+}
