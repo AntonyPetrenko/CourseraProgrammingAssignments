@@ -75,7 +75,7 @@ namespace GameProject
         /// <param name="mouse">the current state of the mouse</param>
         public void Update(GameTime gameTime, KeyboardState keyboard)
         {
-          
+
 
             // burger should only respond to input if it still has health
 
@@ -126,36 +126,44 @@ namespace GameProject
                 }
 
             }
-
             // update shooting allowed
-            // timer concept (for animations) introduced in Chapter 7
-            if (keyboard.IsKeyDown(Keys.Space) && canShoot == true)
+
+            if (!canShoot)
+
             {
 
-                Projectile projectile = new Projectile(ProjectileType.FrenchFries, Game1.GetProjectileSprite(ProjectileType.FrenchFries), drawRectangle.Center.X,  drawRectangle.Center.Y + GameConstants.FrenchFriesProjectileOffset, -GameConstants.FrenchFriesProjectileSpeed);
+                elapsedCooldownMilliseconds += gameTime.ElapsedGameTime.Milliseconds;
+
+                if (elapsedCooldownMilliseconds > GameConstants.BurgerTotalCooldownMilliseconds || keyboard.IsKeyUp(Keys.Space))
+
+                {
+
+                    elapsedCooldownMilliseconds = 0;
+
+                    canShoot = true;
+
+                }
+
+            }
+
+            // timer concept (for animations) introduced in Chapter 7
+
+            // shoot if appropriate
+
+            if (keyboard.IsKeyDown(Keys.Space) && canShoot == true)
+
+            {
+
+                Projectile projectile = new Projectile(ProjectileType.FrenchFries, Game1.GetProjectileSprite(ProjectileType.FrenchFries), drawRectangle.Center.X, drawRectangle.Center.Y + GameConstants.FrenchFriesProjectileOffset, -GameConstants.FrenchFriesProjectileSpeed);
+
                 Game1.AddProjectile(projectile);
 
                 canShoot = false;
-            }
-            
-            // shoot if appropriate
-            if (!canShoot)
-            {
-                elapsedCooldownMilliseconds += gameTime.ElapsedGameTime.Milliseconds;
-            }
-            if (elapsedCooldownMilliseconds > GameConstants.BurgerTotalCooldownMilliseconds || keyboard.IsKeyUp(Keys.Space))
-            {
-                elapsedCooldownMilliseconds = 0;
-                
-                canShoot = true;
-
 
                 shootSound.Play();
 
             }
-            
         }
-        
         /// <summary>
         /// Draws the burger
         /// </summary>
